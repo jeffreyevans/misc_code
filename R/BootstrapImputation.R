@@ -1,53 +1,35 @@
-##########################################################################
-# PROGRAM: bootImp 
-# USE: BAYESIAN BOOTSTRAP IMPUTATION  
-# REQUIRES: R >= 2.12.0 
-#           Hmisc 
-#
-# ARGUMENTS: 
-#       formula           OBJECT OF CLASS formula, SYMBOLIC DESCRIPTION OF MODEL     
-#       data              DATAFRAME        
-#       n.impute          NUMBER OF VALUES TO IMPUTE (USED TO AVERAGE PREDICTION)              
-#       nk                N USED FOR IMPUTATION (DEFAULT=3)
-#       type              "pmm" OR "regression"
-#       boot.method       "simple" OR "approximate bayesian"            
-#
-#  VALUE:
-#     DATAFRAME OBJECT WITH COLUMNS FOR EACH K AND PREDICTED VALUE
-#                  
-#  EXAMPLES: 
-# setwd("C:/ANALYSIS/TEST")
-# data <- read.csv("ALL_DATA.csv", header=TRUE)
-#  md.imp <- bootImp(~YVar + v1 + v2 + v3, data=data, n.impute=3, nk=3,
-#              type="regression",  match="weighted", curtail=TRUE, 
-#              boot.method=c("simple"), B=1000) 
-#  print(md.imp)
-#  impYVar <- as.data.frame(md.imp$imputed$YVar)   
-# THE BOOTSTRAP ESTIMATE OF THE MISSING VALUE IS THE MEAN OF IMPUTED n
-# HERE ARE THE 4 MISSING VALUES I TESTED WITH 3 BOOTSTRAP ESTIMATES
-#                 V1       V2       V3     PRED
-#        1  3.705537 72.76648 96.00000  57.49067233
-#        2  0.000000 61.82800 47.19317  36.34039   
-#        3 29.778937 52.82379 30.45202  37.68491567
-#        4 27.780687 56.61398 96.00000  60.13155567
-#
-# CONTACT: 
-#     Jeffrey S. Evans 
-#     Senior Landscape Ecologist 
-#     The Nature Conservancy,
-#     Development by Design
-#     Affiliate Assistant Professor
-#     University of Wyoming,
-#     Zoology & Physiology 
-#     Laramie, WY
-#     (970)672-6766
-#     jeffrey_evans@tnc.org
-############################################################# 
-bootImp <- function (formula, data, subset, n.impute=5, group=NULL, 
-                      nk=3, tlinear=TRUE, type=c("pmm", "regression"), 
-					  match=c("weighted", "closest"), fweighted=0.2, 
-					  curtail=TRUE, boot.method=c("simple", "approximate bayesian"), 
-					  burnin=3, x=FALSE, pr=TRUE, plotTrans=FALSE, tolerance=NULL, B=75) 
+#' @title Bayesian Bootstrap Imputation
+#'
+#' @description Performs NA imputation based on bootstrap
+#' 
+#' @param   formula               Symbolic description of model or object of class formula
+#' @param   data                  data.frame object
+#' @param   n.impute              Number of values to impute (used to average prediction), default 5
+#' @param   group                 NULL 
+#' @param   nk                    (default=3)
+#' @param   tlinear               TRUE
+#' @param   type                  "pmm" or "regression"
+#' @param   match                 "weighted" or "closest"
+#' @param   fweighted             (default=0.2) 
+#' @param   curtail               TRUE
+#' @param   boot.method           "simple" or "approximate bayesian" 
+#' @param   burnin                (default=3)
+#' @param   x                     FALSE
+#' @param   pr                    TRUE
+#' @param   plotTrans             FALSE
+#' @param   tolerance             NULL 
+#' @param   B                     (default=75)
+#'
+#' @return A data.frame object with columns for each K and imputed value
+#'
+#' @author Jeffrey S. Evans  <jeffrey_evans@@tnc.org> 
+#'
+#' @export bootImp
+bootImp <- function (formula, data, n.impute=5, group=NULL, 
+                     nk=3, tlinear=TRUE, type=c("pmm", "regression"), 
+					 match=c("weighted", "closest"), fweighted=0.2, 
+					 curtail=TRUE, boot.method=c("simple", "approximate bayesian"), 
+					 burnin=3, x=FALSE, pr=TRUE, plotTrans=FALSE, tolerance=NULL, B=75) 
     {
     if (!require(Hmisc)) stop("Hmisc PACKAGE MISSING")
     acall <- match.call()
