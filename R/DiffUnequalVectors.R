@@ -4,7 +4,6 @@ x=runif(20,90,250)
 y=runif(10,100,250)
   names(y) <- paste("y", seq(1:length(y))+20, sep="")
 
-####################### ANALYSIS #######################
 # Create dataframe of all combinations and assigns names  
 xy <- expand.grid(x,y)
   xy <- data.frame(expand.grid(names(x),names(y)), xy)
