@@ -22,7 +22,6 @@ intended for publication in reviewed libraries.
 | `color.transparency`            | R | Creates new HEX value with transparency
 | `cRamp`                         | R | Creates a new vector based on a color ramp
 | `CreateDistributions`           | R | Example of creating a few distributions (eg., normal, skewed, kurtotic) 
-| `DiffUnequalVectors`            | R | Comparison of unequal grouping factor lengths
 | `DiffUnequalVectors`            | R | Example of calculating statistics when class lengths are not equal
 | `fragmentation`                 | R | Ritter et al fragmentation index
 | `GaussianMixtureModel`          | R | Example of a Gaussian mixture model 
