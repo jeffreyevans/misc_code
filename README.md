@@ -18,7 +18,7 @@ intended for publication in reviewed libraries.
 | `box_muller`                    | R | Box-Muller transformation 
 | `cAIC`                          | R | Conditional AIC where one is interested in the particular coefficient estimates for individual random effects
 | `ChangePointDetection`          | R | Examples of univariate and multivariate change point detection 
-| `ClassificationImprovedSqError` | R | Evaluate Classification Improved Squared Error defined as; (1-(P(t|x,0) / v(t)))^2
+| `ClassificationImprovedSqError` | R | Evaluate Classification Improved Squared Error defined as; (1-(P(t/|x,0) / v(t)))^2
 | `color.transparency`            | R | Creates new HEX value with transparency
 | `cRamp`                         | R | Creates a new vector based on a color ramp
 | `CreateDistributions`           | R | Example of creating a few distributions (eg., normal, skewed, kurtotic) 
