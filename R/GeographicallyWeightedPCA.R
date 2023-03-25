@@ -91,10 +91,10 @@ to.raster <- function(u) raster(matrix(u, nrow=n.cols), xmn=xmin, xmx=xmax,
                                 ymn=ymin, ymx=ymax)
 maps <- apply(z, 1, to.raster)
   par(mfrow=c(2,2))
-    plot(maps[[1]]); points(xy, pch=19)
-    plot(maps[[2]]); points(xy, pch=19)
-    plot(maps[[3]]); points(xy, pch=19)
-    plot(maps[[4]]); points(xy, pch=19)
+    plot(maps[[1]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[2]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[3]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[4]]); points(xy, pch=20, cex=0.60)
 
 # Plot all  
 # tmp <- lapply(maps, function(m) {plot(m); points(xy, pch=19)})
