@@ -54,12 +54,19 @@ gw.pca <- function(x, xy, y, tau) {
 ################################################################################
 # Let's illustrate with some random sample data comparable to those described in 
 # the question: 30 variables at 550 locations.
+library(terra)
+library(sf)
 
 set.seed(17)
 n.data <- 550
 n.vars <- 30
 xy <- matrix(rnorm(n.data * 2), ncol=2)
+  colnames(xy) <- c("x","y")  
 y <- matrix(rnorm(n.data * n.vars), ncol=n.vars)
+  colnames(y) <- paste0("var", 1:ncol(y))
+
+pts <- st_as_sf(data.frame(xy,y), coords = c("x", "y"), agr = "constant")
+  plot(pts["var1"], pch=19)
 
 # Geographically weighted calculations are often performed on a selected set of 
 # locations, such as along a transect or at points of a regular grid. Let's use 
@@ -74,7 +81,7 @@ xmin <- min(xy[,1]); xmax <- max(xy[,1]); n.cols <- 30
   
 points <- cbind(rep(dx, length(dy)), as.vector(sapply(rev(dy), 
                 function(u) rep(u, length(dx)))))
-
+  
 # There's a question of what information we wish to retain from each PCA. Typically, 
 # a PCA for n variables returns a sorted list of n eigenvalues and, in various forms,
 # a corresponding list of n vectors, each of length n. That's n*(n+1) numbers to map! 
@@ -86,16 +93,18 @@ points <- cbind(rep(dx, length(dy)), as.vector(sapply(rev(dy),
 z <- apply(points, 1, function(x) gw.pca(x, xy, y, 1)$sdev)
 
 # CREATE RASTERS OF EIGENVALUES AND PLOT RESULTS
-library(raster)
-to.raster <- function(u) raster(matrix(u, nrow=n.cols), xmn=xmin, xmx=xmax, 
-                                ymn=ymin, ymx=ymax)
-maps <- apply(z, 1, to.raster)
-  par(mfrow=c(2,2))
+to.raster <- function(u, n) { 
+  rast(matrix(u, nrow=n), extent=ext(xmin, xmax, ymin, ymax))
+}
+					
+maps <- apply(z, 1, to.raster, n=30)
+  par(mfrow=c(3,3))
     plot(maps[[1]]); points(xy, pch=20, cex=0.60)
     plot(maps[[2]]); points(xy, pch=20, cex=0.60)
     plot(maps[[3]]); points(xy, pch=20, cex=0.60)
     plot(maps[[4]]); points(xy, pch=20, cex=0.60)
-
-# Plot all  
-# tmp <- lapply(maps, function(m) {plot(m); points(xy, pch=19)})
-				
+    plot(maps[[5]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[6]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[7]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[8]]); points(xy, pch=20, cex=0.60)
+    plot(maps[[9]]); points(xy, pch=20, cex=0.60)

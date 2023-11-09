@@ -484,3 +484,4 @@ getDEM <- function(polygon, ISO3 = "AUT", clip = TRUE) {
     return(list(DEM_meter, NULL))
   }
 }
+
